@@ -19,11 +19,11 @@ const (
 
 func (t Token) String() string {
 	switch t {
-	case 2:
+	case Whitespace:
 		return " "
-	case 3:
+	case Dot:
 		return "."
-	case 4:
+	case Hyphen:
 		return "-"
 	}
 	return ""
