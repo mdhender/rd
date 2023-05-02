@@ -1,10 +1,15 @@
+// Copyright (c) 2023 Michael D Henderson
+// Copyright (c) 2018 Shivam Mamgain
+// SPDX-License-Identifier: MIT
+//
+
 package main
 
 import (
 	"testing"
 
-	"github.com/shivamMg/rd"
-	"github.com/shivamMg/rd/examples/arithmetic/parser"
+	"github.com/mdhender/rd"
+	"github.com/mdhender/rd/examples/arithmetic/parser"
 )
 
 func TestArithmeticExpressionsGrammar(t *testing.T) {

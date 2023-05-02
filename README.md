@@ -1,4 +1,4 @@
-# rd [![godoc](https://godoc.org/github.com/shivammg/rd?status.svg)](https://godoc.org/github.com/shivamMg/rd) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+# rd [![godoc](https://godoc.org/github.com/shivammg/rd?status.svg)](https://godoc.org/github.com/mdhender/rd) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 `rd` is a small library to build hand-written recursive descent parsers. Besides exposing convenient methods to parse tokens it features automatic parse tree generation and flow tracing for debugging.
 
@@ -32,7 +32,7 @@ func B() bool {
 Parser for the same grammar written using `rd`:
 
 ```go
-import "github.com/shivamMg/rd"
+import "github.com/mdhender/rd"
 
 func A(b *rd.Builder) (ok bool) {
     b.Enter("A")
@@ -111,7 +111,7 @@ A(false)
 ### [Arithmetic expression parser](examples/arithmetic)
 
 ```bash
-go get github.com/shivamMg/rd/examples/arithmetic   # requires go modules support (go1.11+)
+go get github.com/mdhender/rd/examples/arithmetic   # requires go modules support (go1.11+)
 arithmetic -expr='3.14*4*(6/3)'  # hopefully $GOPATH/bin is in $PATH
 arithmetic -expr='3.14*4*(6/3)' -backtrackingparser
 ```
@@ -124,7 +124,7 @@ This example lexer built using [chroma](https://github.com/alecthomas/chroma).
 ### [PL/0 programming language parser](examples/pl0)
 
 ```
-go get github.com/shivamMg/rd/examples/pl0
+go get github.com/mdhender/rd/examples/pl0
 cd examples/pl0/
 pl0 square.pl0
 pl0 multiply.pl0
@@ -136,7 +136,7 @@ Parser and grammar can be found inside `examples/pl0/parser`. Grammar has been t
 ### [Domain name parser](examples/domainname)
 
 ```
-go get github.com/shivamMg/rd/examples/domainname
+go get github.com/mdhender/rd/examples/domainname
 domainname www.google.co.uk
 ```
 

@@ -1,3 +1,8 @@
+// Copyright (c) 2023 Michael D Henderson
+// Copyright (c) 2018 Shivam Mamgain
+// SPDX-License-Identifier: MIT
+//
+
 package rd
 
 import (
@@ -49,14 +54,17 @@ func NewBuilder(tokens []Token) *Builder {
 // relative to the current index.
 //
 // ex. if current index points to tkn3:
-//  tokens:           tkn1 tkn2 tkn3 tkn4 tkn5
-//  original indexes:  0    1    2    3    4
-//  relative indexes: -2   -1    0    1    2
+//
+//	tokens:           tkn1 tkn2 tkn3 tkn4 tkn5
+//	original indexes:  0    1    2    3    4
+//	relative indexes: -2   -1    0    1    2
+//
 // you can use:
-//  Peek(-2) to get tkn1,
-//  Peek(-1) to get tkn2,
-//  Peek(1) to get tkn4,
-//  Peek(2) to get tkn5.
+//
+//	Peek(-2) to get tkn1,
+//	Peek(-1) to get tkn2,
+//	Peek(1) to get tkn4,
+//	Peek(2) to get tkn5.
 //
 // ok is false if i lies outside original index range, else true.
 func (b *Builder) Peek(i int) (token Token, ok bool) {

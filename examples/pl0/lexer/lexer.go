@@ -1,3 +1,8 @@
+// Copyright (c) 2023 Michael D Henderson
+// Copyright (c) 2018 Shivam Mamgain
+// SPDX-License-Identifier: MIT
+//
+
 package lexer
 
 import (
@@ -6,8 +11,8 @@ import (
 	"strings"
 
 	"github.com/alecthomas/chroma"
-	"github.com/shivamMg/rd"
-	pl0Tokens "github.com/shivamMg/rd/examples/pl0/tokens"
+	"github.com/mdhender/rd"
+	pl0Tokens "github.com/mdhender/rd/examples/pl0/tokens"
 )
 
 var lexer = chroma.MustNewLexer(

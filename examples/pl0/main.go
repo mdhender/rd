@@ -1,3 +1,8 @@
+// Copyright (c) 2023 Michael D Henderson
+// Copyright (c) 2018 Shivam Mamgain
+// SPDX-License-Identifier: MIT
+//
+
 package main
 
 import (
@@ -6,8 +11,8 @@ import (
 
 	"io/ioutil"
 
-	"github.com/shivamMg/rd/examples/pl0/lexer"
-	"github.com/shivamMg/rd/examples/pl0/parser"
+	"github.com/mdhender/rd/examples/pl0/lexer"
+	"github.com/mdhender/rd/examples/pl0/parser"
 )
 
 func main() {

@@ -1,3 +1,8 @@
+// Copyright (c) 2023 Michael D Henderson
+// Copyright (c) 2018 Shivam Mamgain
+// SPDX-License-Identifier: MIT
+//
+
 package main
 
 import (
@@ -7,9 +12,9 @@ import (
 
 	"flag"
 
-	"github.com/shivamMg/rd"
-	"github.com/shivamMg/rd/examples/arithmetic/backtrackingparser"
-	"github.com/shivamMg/rd/examples/arithmetic/parser"
+	"github.com/mdhender/rd"
+	"github.com/mdhender/rd/examples/arithmetic/backtrackingparser"
+	"github.com/mdhender/rd/examples/arithmetic/parser"
 )
 
 var (

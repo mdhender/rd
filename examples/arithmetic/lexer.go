@@ -1,10 +1,15 @@
+// Copyright (c) 2023 Michael D Henderson
+// Copyright (c) 2018 Shivam Mamgain
+// SPDX-License-Identifier: MIT
+//
+
 package main
 
 import (
 	"fmt"
 
 	"github.com/alecthomas/chroma"
-	"github.com/shivamMg/rd"
+	"github.com/mdhender/rd"
 )
 
 var lexer = chroma.MustNewLexer(
