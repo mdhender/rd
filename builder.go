@@ -32,7 +32,7 @@ func newParsingError(errString string) *ParsingError {
 type Builder struct {
 	tokens         []Token
 	current        int
-	stack          stack
+	stack          *stack
 	finalEle       ele
 	debugStack     debugStack
 	finalDebugTree *DebugTree
@@ -45,7 +45,7 @@ func NewBuilder(tokens []Token) *Builder {
 	return &Builder{
 		tokens:     tokens,
 		current:    -1,
-		stack:      stack{},
+		stack:      &stack{},
 		debugStack: debugStack{},
 	}
 }
@@ -246,7 +246,7 @@ func (b *Builder) Err() *ParsingError {
 }
 
 func (b Builder) mustEnter(operation string) {
-	if len(b.stack) == 0 {
+	if b.stack.isEmpty() {
 		log.Panicf("cannot %s. must Enter a non-terminal first", operation)
 	}
 }
