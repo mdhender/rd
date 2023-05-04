@@ -24,7 +24,7 @@ func TestExit_FinalEleAndDebugTree(t *testing.T) {
 	b.Enter("root")
 	assert.Equal(t, ele{}, b.finalEle)
 	assert.Nil(t, b.finalDebugTree)
-	root := b.stack.peek()
+	root := b.stack.Peek()
 	rootDebugTree := b.debugStack.peek()
 	result := true
 	b.Exit(&result)
@@ -44,10 +44,10 @@ func TestExit_FinalErr(t *testing.T) {
 func TestExit_AddToParent(t *testing.T) {
 	b := NewBuilder(nil)
 	b.Enter("root")
-	root := b.stack.peek()
+	root := b.stack.Peek()
 	rootDebugTree := b.debugStack.peek()
 	b.Enter("child")
-	child := b.stack.peek()
+	child := b.stack.Peek()
 	childDebugTree := b.debugStack.peek()
 	result := true
 	b.Exit(&result)

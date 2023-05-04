@@ -5,26 +5,26 @@
 
 package rd
 
-type stack struct {
-	stack []ele
-}
-
-func (s *stack) isEmpty() bool {
-	return len(s.stack) == 0
-}
-
-// peek will panic if stack is empty
-func (s *stack) peek() ele {
-	return s.stack[len(s.stack)-1]
-}
-
-// pop will panic if stack is empty
-func (s *stack) pop() ele {
-	top := s.stack[len(s.stack)-1]
-	s.stack = s.stack[:len(s.stack)-1]
-	return top
-}
-
-func (s *stack) push(e ele) {
-	s.stack = append(s.stack, e)
-}
+//type Stack struct {
+//	stack []ele
+//}
+//
+//func (s *Stack) IsEmpty() bool {
+//	return len(s.stack) == 0
+//}
+//
+//// Peek will panic if Stack is empty
+//func (s *Stack) Peek() (ele, bool) {
+//	return s.stack[len(s.stack)-1], true
+//}
+//
+//// Pop will panic if Stack is empty
+//func (s *Stack) Pop() (ele, bool) {
+//	top := s.stack[len(s.stack)-1]
+//	s.stack = s.stack[:len(s.stack)-1]
+//	return top, true
+//}
+//
+//func (s *Stack) Push(e ele) {
+//	s.stack = append(s.stack, e)
+//}

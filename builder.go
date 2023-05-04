@@ -7,6 +7,7 @@ package rd
 
 import (
 	"fmt"
+	"github.com/mdhender/rd/stack"
 	"log"
 )
 
@@ -32,9 +33,9 @@ func newParsingError(errString string) *ParsingError {
 type Builder struct {
 	tokens         []Token
 	current        int
-	stack          *stack
+	stack          *stack.Stack[ele]
 	finalEle       ele
-	debugStack     debugStack
+	debugStack     *stack.Stack[*DebugTree]
 	finalDebugTree *DebugTree
 	finalErr       *ParsingError
 	skip           bool
@@ -45,8 +46,8 @@ func NewBuilder(tokens []Token) *Builder {
 	return &Builder{
 		tokens:     tokens,
 		current:    -1,
-		stack:      &stack{},
-		debugStack: debugStack{},
+		stack:      stack.New[ele](),
+		debugStack: stack.New[*DebugTree](),
 	}
 }
 
@@ -112,7 +113,10 @@ func (b *Builder) next() (token Token, ok bool) {
 // matches done inside the function.
 func (b *Builder) Backtrack() {
 	b.mustEnter("Backtrack")
-	e := b.stack.peek()
+	e, ok := b.stack.Peek()
+	if !ok {
+		panic("b.stack underflow")
+	}
 	b.current = e.index
 	e.nonTerm.Subtrees = []*Tree{}
 }
@@ -121,7 +125,10 @@ func (b *Builder) Backtrack() {
 // non-terminal subtree.
 func (b *Builder) Add(token Token) {
 	b.mustEnter("Add")
-	e := b.stack.peek()
+	e, ok := b.stack.Peek()
+	if !ok {
+		panic("b.stack underflow")
+	}
 	e.nonTerm.Add(NewTree(token))
 }
 
@@ -135,7 +142,10 @@ func (b *Builder) Match(token Token) (ok bool) {
 	b.mustEnter("Match")
 	debugMsg := ""
 	defer func() {
-		dt := b.debugStack.peek()
+		dt, ok := b.debugStack.Peek()
+		if !ok {
+			panic("b.debugStack underflow")
+		}
 		dt.add(newDebugTree(debugMsg))
 	}()
 
@@ -167,11 +177,11 @@ func (b *Builder) Skip() {
 //
 // Enter should be called right after entering the non-terminal function.
 func (b *Builder) Enter(nonTerm interface{}) *Builder {
-	b.stack.push(ele{
+	b.stack.Push(ele{
 		index:   b.current,
 		nonTerm: NewTree(nonTerm),
 	})
-	b.debugStack.push(newDebugTree(fmt.Sprint(nonTerm)))
+	b.debugStack.Push(newDebugTree(fmt.Sprint(nonTerm)))
 	return b
 }
 
@@ -189,22 +199,28 @@ func (b *Builder) Exit(result *bool) {
 	if result == nil {
 		panic("Exit result cannot be nil")
 	}
-	e := b.stack.pop()
+	e, ok := b.stack.Pop()
+	if !ok {
+		panic("b.stack.pop underflow")
+	}
 	resetCurrent := false
 	switch {
 	case b.skip:
 		resetCurrent = true
 		b.skip = false
-	case *result && b.stack.isEmpty():
+	case *result && b.stack.IsEmpty():
 		if _, ok := b.next(); ok {
 			b.finalErr = newParsingError("not all tokens consumed")
 		} else {
 			b.finalEle = e
 		}
 	case *result:
-		parent := b.stack.peek()
+		parent, ok := b.stack.Peek()
+		if !ok {
+			panic("b.stack underflow")
+		}
 		parent.nonTerm.Add(e.nonTerm)
-	case b.stack.isEmpty():
+	case b.stack.IsEmpty():
 		// TODO: add additional info to the error message
 		b.finalErr = newParsingError("parsing error")
 		resetCurrent = true
@@ -215,12 +231,18 @@ func (b *Builder) Exit(result *bool) {
 		b.current = e.index
 	}
 
-	dt := b.debugStack.pop()
+	dt, ok := b.debugStack.Pop()
+	if !ok {
+		panic("b.debugStack underflow")
+	}
 	dt.data += fmt.Sprintf("(%t)", *result)
-	if b.debugStack.isEmpty() {
+	if b.debugStack.IsEmpty() {
 		b.finalDebugTree = dt
 	} else {
-		parent := b.debugStack.peek()
+		parent, ok := b.debugStack.Peek()
+		if !ok { // can't happen
+			panic("b.debugStack underflow")
+		}
 		parent.add(dt)
 	}
 }
@@ -246,7 +268,7 @@ func (b *Builder) Err() *ParsingError {
 }
 
 func (b Builder) mustEnter(operation string) {
-	if b.stack.isEmpty() {
+	if b.stack.IsEmpty() {
 		log.Panicf("cannot %s. must Enter a non-terminal first", operation)
 	}
 }
