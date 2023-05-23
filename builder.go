@@ -193,7 +193,7 @@ func (b *Builder) Enter(nonTerm interface{}) *Builder {
 //  2. Else it's added as a subtree to its parent non-terminal.
 //
 // The convenient way to call Exit is by using a named boolean return for the
-// non-terminal function, and passing it's address to a deferred Exit.
+// non-terminal function, and passing its address to a deferred Exit.
 func (b *Builder) Exit(result *bool) {
 	b.mustEnter("Exit")
 	if result == nil {
